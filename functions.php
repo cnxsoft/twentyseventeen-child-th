@@ -11,9 +11,9 @@ function my_theme_enqueue_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
 
-/* JLA - Set excerpts length to 160 words */
+/* JLA - Set excerpts length to 720 characters? */
 function custom_excerpt_length( $length ) {
-	return 160;
+	return 720;
 }
 add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 
