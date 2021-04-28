@@ -20,11 +20,11 @@
 <meta name="referrer" content="always"/>
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <!-- JLA - PubGalaxy Adblock script Top -->
-<?php /* echo adrotate_ad(104);*/ ?>
+<?php echo adrotate_ad(104); ?>
 <!-- End PubGalaxy Code -->
 <?php wp_head(); ?>
 <!-- JLA - PubGalaxy Adblock script bottom -->
-<?php /* echo adrotate_ad(105);*/ ?>
+<?php echo adrotate_ad(105); ?>
 <!-- End PubGalaxy Code -->
 
 </head>
