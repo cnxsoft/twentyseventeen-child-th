@@ -78,7 +78,7 @@ if ( post_password_required() ) {
 	endif;
 
 	comment_form();
-        <!-- JLA - Ad after comments -->
+        /* JLA - Ad after comments */
 	if (function_exists('adrotate_group')) {
 		if (!wp_is_mobile()) {
 			echo adrotate_group(2); 
