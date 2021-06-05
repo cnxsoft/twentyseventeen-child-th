@@ -19,64 +19,114 @@
 	endif;
 	?>
 	<header class="entry-header">
-		<?php
-		if ( 'post' === get_post_type() ) {
-			echo '<div class="entry-meta">';
-				if ( is_single() ) {
-					twentyseventeen_posted_on();
-					echo " - ";
-                                        comments_popup_link();
-				} else {
-					twentyseventeen_posted_on();
-					echo " - ";
-                                        comments_popup_link();
-					twentyseventeen_edit_link();
-				};
-			echo '</div><!-- .entry-meta -->';
-		};
 
+	<?php
+		if ( 'post' === get_post_type() && ! wp_is_mobile() ) {
+			echo '<div class="entry-meta">';
+			if ( is_single() ) {
+				twentyseventeen_posted_on();
+				echo " - ";
+				comments_popup_link();
+			} else {
+				twentyseventeen_posted_on();
+				echo " - ";
+				comments_popup_link();
+				twentyseventeen_edit_link();
+			};
+			echo '</div>';
+		}; 
+
+		if ( 'post' === get_post_type() && wp_is_mobile() ) {
+			if ( is_single() ) {
+				echo '<div class="entry-meta">';
+				twentyseventeen_posted_on();
+				echo " - ";
+				comments_popup_link();
+				echo '</div>';
+			}
+		}
+		?>
+
+	<?php 
 		if ( is_single() ) {
+			echo '<div class="post-title">';
 			the_title( '<h1 class="entry-title">', '</h1>' );
+			echo '</div>';
+
 		} elseif ( is_front_page() && is_home() ) {
-			the_title( '<h3 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); 
+			if (!wp_is_mobile()) {
+				the_title( '<h3 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' );
+			} else {
+				echo '<div class="post-thumbnail one-third-m"><a href="' . esc_url( get_permalink() ) . '">', '<img alt="" align="left" width=300 height=250 margin=10px src="' . catch_that_image() . '"></a></div>';
+				echo '<div class="two-third-m">';
+					if ( 'post' === get_post_type() ) {
+						echo '<div class="entry-meta">';
+						twentyseventeen_posted_on();
+						twentyseventeen_edit_link();
+						echo '</div>';
+					}
+					echo '<div class="post-title">';
+					the_title( '<h3 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' );
+					echo '</div>';
+				echo '</div>';
+			}
 		} else {
-			the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' ); 
+			if (!wp_is_mobile()) {
+				the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' ); 
+			} else {
+				echo '<div class="post-thumbnail one-third-m"><a href="' . esc_url( get_permalink() ) . '">', '<img alt="" align="left" width=300 height=250 margin=10px src="' . catch_that_image() . '"></a></div>';
+				echo '<div class="two-third-m">';
+					if ( 'post' === get_post_type() ) {
+						echo '<div class="entry-meta">';
+						twentyseventeen_posted_on();
+						twentyseventeen_edit_link();
+						echo '</div>';
+					}
+					echo '<div class="post-title">';
+					the_title( '<h3 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' );
+					echo '</div>';
+				echo '</div>';
+			}
 		}
 		?>
 	</header><!-- .entry-header -->
 
-	<?php if ( '' !== get_the_post_thumbnail() && ! is_single() ) : ?>
-		<div class="post-thumbnail">
-			<a href="<?php the_permalink(); ?>">
-				<?php the_post_thumbnail( 'thumbnail' ); ?>
-			</a>
-		</div><!-- .post-thumbnail -->
-	<?php else :
-		 if (! is_single() ) { ?>
-		<div class="post-thumbnail">	
-                        <a href="<?php the_permalink(); ?>">
-                       <img alt="" align="left" width=300 height=250 margin=10px src="<?php echo catch_that_image(); ?>"></a>
-		</div><!-- .post-thumbnail -->
-                <?php
-                }
-	endif; ?>
+	
+			<?php if ( '' !== get_the_post_thumbnail() && ! is_single() && ! wp_is_mobile() ) : ?>
+				<div class="post-thumbnail">
+					<a href="<?php the_permalink(); ?>">
+						<?php the_post_thumbnail( 'thumbnail' ); ?>
+					</a>
+				</div><!-- .post-thumbnail -->
+			<?php else :
+				 if (! is_single() && ! wp_is_mobile() ) { ?>
+				 		<div class="post-thumbnail">
+				 		<a href="<?php the_permalink(); ?>">
+				 			<img alt="" align="left" width=300 height=250 margin=10px src="<?php echo catch_that_image(); ?>">
+				 		</a>
+					</div><!-- .post-thumbnail -->
+			<?php } endif; ?>
+
 
 	<div class="entry-content">
 		<?php
 
 		if ( is_single() ) {
 
-		/* translators: %s: Name of current post */
-		the_content( sprintf(
-			__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'twentyseventeen' ),
-			get_the_title()
-		) );
+			/* translators: %s: Name of current post */
+			the_content( sprintf(
+				__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'twentyseventeen' ),
+				get_the_title()
+			) );
+		
 		} else {
 
-		the_excerpt( sprintf(
-			__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'twentyseventeen' ),
-			get_the_title()
-		) );
+			if (!wp_is_mobile()) {
+				the_excerpt( sprintf(
+					__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'twentyseventeen' ),
+					get_the_title()
+				) );
+			}
 		}
         
 
@@ -89,28 +139,12 @@
 		?>
 	</div><!-- .entry-content -->
 
-	<?php
-	if ( is_single() ) { ?>
-		<!-- JLA - Ad related content -->
-                <table>
-                <tr>
-                        <td width=338>
-		        <?php echo adrotate_group(4); ?>
-                        </td>
-                        <td valign="top">
-                        <?php
-                                if(function_exists('yarpp_related')) {
-                                       yarpp_related(array('post_type' => 'post'));
-                                }
-                        ?>
-                        </td>
-                </tr>
-                </table>
-		<!-- JLA - PubGalaxy Multiplex -->
-		<?php echo adrotate_ad(8); ?>
-
-		<?php twentyseventeen_entry_footer();
-	}
-	?>
+	<?php if ( is_single() ) { 
+		if (!wp_is_mobile()) {
+			<!-- JLA - PubGalaxy Multiplex -->
+			<?php echo adrotate_ad(8); ?>
+		}
+		twentyseventeen_entry_footer();
+	} ?>
 
 </article><!-- #post-## -->

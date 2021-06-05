@@ -1,13 +1,7 @@
 <?php
 function my_theme_enqueue_styles() {
-
     $parent_style = 'parent-style'; // This is 'twentyfifteen-style' for the Twenty Fifteen theme.
-
     wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
-    wp_enqueue_style( 'child-style',
-        get_stylesheet_directory_uri() . '/style.css',
-        array( $parent_style )
-    );
 }
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
 
@@ -49,7 +43,7 @@ add_filter( 'excerpt_more', 'twentyseventeen_excerpt_more_child', 999);
 
 /* Add nofollow to link to comments */
 function add_nofollow_to_comments_popup_link () {
-	return 'rel="nofollow"';
+	return ' rel="nofollow"';
 }
 add_filter ( 'comments_popup_link_attributes', 'add_nofollow_to_comments_popup_link' ); 
 
@@ -60,4 +54,90 @@ add_filter( 'big_image_size_threshold', '__return_false' );
 /* Enable shortcodes in widgets */
 add_filter( 'widget_text', 'shortcode_unautop');
 add_filter( 'widget_text', 'do_shortcode', 11);
+
+/* Trim description for OG plugin */
+add_filter( 'og_og_description_value', function( $value ) {
+    return wp_trim_words( $value );
+});
+
+/* Let Contributor Role to Upload Media */
+if ( current_user_can('contributor') && !current_user_can('upload_files') )
+    add_action('admin_init', 'allow_contributor_uploads');
+function allow_contributor_uploads() {
+    $contributor = get_role('contributor');
+    $contributor->add_cap('upload_files');
+}
+
+/* display featured post thumbnails in WordPress feeds */
+add_filter( 'the_excerpt_rss', 'cnxth_ThumbnailsFeeds' );
+add_filter( 'the_content_feed', 'cnxth_ThumbnailsFeeds' );
+function cnxth_ThumbnailsFeeds( $content ) {
+  global $post;
+  if( is_feed() ) {
+    if ( has_post_thumbnail( $post->ID ) ){
+      $prepend = '<div>' . get_the_post_thumbnail( $post->ID, 'medium', array( 'style' => 'margin-bottom: 10px;' ) ) . '</div>';
+      $content = $prepend . $content;
+    }
+  }
+  return $content;
+}
+
+/**
+   * Prints HTML with meta information for the categories, tags and comments.
+   */
+function twentyseventeen_entry_footer() {
+
+  /* translators: Used between list items, there is a space after the comma. */
+  $separate_meta = __( ', ', 'twentyseventeen' );
+
+  // Get Categories for posts.
+  $categories_list = get_the_category_list( $separate_meta );
+
+  // Get Tags for posts.
+  $tags_list = get_the_tag_list( '', $separate_meta );
+
+  // We don't want to output .entry-footer if it will be empty, so make sure its not.
+  if ( ( ( twentyseventeen_categorized_blog() && $categories_list ) || $tags_list ) || get_edit_post_link() ) {
+
+    echo '<footer class="entry-footer">';
+
+    if ( 'post' === get_post_type() ) {
+      if ( ( $categories_list && twentyseventeen_categorized_blog() ) || $tags_list ) {
+        echo '<span class="cat-tags-links">';
+
+        // Make sure there's more than one category before displaying.
+        if ( $categories_list && twentyseventeen_categorized_blog() ) {
+          echo '<span class="cat-links">' . twentyseventeen_get_svg( array( 'icon' => 'folder-open' ) ) . '<span class="screen-reader-text">' . __( 'Categories', 'twentyseventeen' ) . '</span>' . $categories_list . '</span>';
+        }
+
+        if ( $tags_list && ! is_wp_error( $tags_list ) ) {
+          echo '<span class="tags-links">' . twentyseventeen_get_svg( array( 'icon' => 'hashtag' ) ) . '<span class="screen-reader-text">' . __( 'Tags', 'twentyseventeen' ) . '</span>' . $tags_list . '</span>';
+        }
+
+        echo '</span>';
+      }
+      twentyseventeen_edit_link();
+    }
+    echo '</footer> <!-- .entry-footer -->';
+  }
+
+  if (function_exists('adrotate_group') || function_exists('yarpp_related')) {
+    echo '<footer id="entry-subFooter" class="one">';
+    if(function_exists('adrotate_group')) {
+      echo '<div class="one-half">';
+      if (!wp_is_mobile()) {
+        echo adrotate_group(4);
+      } else {
+        echo adrotate_group(11);
+      }
+      echo '</div>';
+    } 
+    if(function_exists('yarpp_related')) {
+      echo '<div class="one-half">';
+      yarpp_related(array('post_type' => 'post'));
+      echo '</div>'; 
+    }
+    echo '</footer>';
+  }
+}
 ?>

@@ -5,15 +5,15 @@
  * This is the most generic template file in a WordPress theme
  * and one of the two required files for a theme (the other being style.css).
  * It is used to display a page when nothing more specific matches a query.
- * E.g., it puts together the home page when no home.php file exists.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package WordPress
- * @subpackage Twenty_Seventeen
- * @since Twenty Seventeen 1.0
- * @version 1.0
- */
+* E.g., it puts together the home page when no home.php file exists.
+*
+* @link https://codex.wordpress.org/Template_Hierarchy
+*
+* @package WordPress
+* @subpackage Twenty_Seventeen
+* @since 1.0
+* @version 1.0
+*/
 
 get_header(); ?>
 
@@ -46,19 +46,28 @@ get_header(); ?>
 					 */
 					get_template_part( 'template-parts/post/content', get_post_format() );
 			                /* JLA 2nd and 6th position ads */
-			                STATIC $countpost = 0; /* JLA */
-			                switch ($countpost){
-			                        case 1: echo adrotate_group(8);
-			                        break;
-                       				case 5: echo adrotate_group(9);
-                         			break;
-			                        default:
-			                }
-			                $countpost++;
+					if (!wp_is_mobile() && function_exists('adrotate_group')) {
+			  	            	STATIC $countpost = 0; /* JLA */
+			  	    	        switch ($countpost){
+			  	      	       	case 1: echo adrotate_group(8);
+						        break;
+		              				case 5: echo adrotate_group(9);
+		                 			break;
+					                default:
+					        }
+				                $countpost++;
+					}
 				endwhile;
-				/* JLA - Bottom 728x90 ad */
-				echo adrotate_group(2); 
-
+				
+				/* JLA - Bottom ad */
+				if (function_exists('adrotate_group')) {
+					if (!wp_is_mobile()) {
+						echo adrotate_group(2); 
+					} else {
+						echo adrotate_group(12); 
+					}
+				}
+				
 				the_posts_pagination( array(
 					'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'twentyseventeen' ) . '</span>',
 					'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'twentyseventeen' ) . '</span>' . twentyseventeen_get_svg( array( 'icon' => 'arrow-right' ) ),

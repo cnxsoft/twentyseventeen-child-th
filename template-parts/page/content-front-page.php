@@ -4,7 +4,7 @@
  *
  * @package WordPress
  * @subpackage Twenty_Seventeen
- * @since Twenty Seventeen 1.0
+ * @since 1.0
  * @version 1.0
  */
 
@@ -26,9 +26,17 @@
 
         <!-- JLA  -->
         <div class="fixed"></div>
-        <?php echo adrotate_group(1); ?>
-
-
+        <?php 
+	        if (function_exists('adrotate_group')) {
+				if (!wp_is_mobile()) {
+					echo adrotate_group(1); 
+				} else {
+					echo adrotate_group(10); 
+				}
+			}
+        ?>
+				
+	
 	<div class="panel-content">
 		<div class="wrap">
 			<header class="entry-header">
