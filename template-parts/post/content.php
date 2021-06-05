@@ -141,8 +141,8 @@
 
 	<?php if ( is_single() ) { 
 		if (!wp_is_mobile()) {
-			<!-- JLA - PubGalaxy Multiplex -->
-			<?php echo adrotate_ad(8); ?>
+			/* JLA - PubGalaxy Multiplex */
+			echo adrotate_ad(8); 
 		}
 		twentyseventeen_entry_footer();
 	} ?>
