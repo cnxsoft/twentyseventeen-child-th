@@ -154,7 +154,6 @@ function dashicons_admin_only() {
 add_action( 'wp_print_styles', 'dashicons_admin_only' );
 
 /* Delay Cookie banner */
-<?php
 function wt_cli_defer_scripts( $tag, $handle, $src ) {
 	$defer = array( 
 	  'cookie-law-info',
