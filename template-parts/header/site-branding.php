@@ -36,9 +36,13 @@
                 if(function_exists('adrotate_group')) {
                         echo '<div class="header-ad">';
                         if (!wp_is_mobile()) {
-                                echo adrotate_group(1);
+               	            echo adrotate_group(1);
                         } else {
+		            if ( function_exists( 'amp_is_request' ) &&  amp_is_request() ) {
+               	                echo adrotate_group(13);
+		            } else {
                                 echo adrotate_group(10);
+			    }
                         }
                         echo '</div>';
                 }

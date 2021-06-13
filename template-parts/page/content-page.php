@@ -34,7 +34,11 @@
 			if (!wp_is_mobile()) {
 				echo adrotate_group(4); 
 			} else {
-				echo adrotate_group(11); 
+   			    if ( function_exists( 'amp_is_request' ) &&  amp_is_request() ) {
+                                echo adrotate_group(14);
+                            } else {
+				echo adrotate_group(11);
+			    }
 			}
 		}
 		?>

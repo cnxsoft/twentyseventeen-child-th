@@ -83,7 +83,11 @@ if ( post_password_required() ) {
 		if (!wp_is_mobile()) {
 			echo adrotate_group(2); 
 		} else {
-			echo adrotate_group(12); 
+			if ( function_exists( 'amp_is_request' ) &&  amp_is_request() ) {
+                            echo adrotate_group(15);
+                        } else {
+			    echo adrotate_group(12); 
+			}
 		}
 	}
 	?>
