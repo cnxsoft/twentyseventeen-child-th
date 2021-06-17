@@ -166,7 +166,7 @@ footer#entry-subFooter {border-bottom: 1px solid #eee;}
 
 /* Lists margins & padding */
 ul, ol {
-    margin: 0em 2.0em;
+    margin: 0em 0.5em;
     padding: 0;
     padding-top: 0px;
     padding-right: 0px;
