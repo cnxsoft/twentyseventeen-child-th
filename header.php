@@ -22,7 +22,7 @@
 <meta name="referrer" content="always"/>
 <link rel="profile" href="http://gmpg.org/xfn/11">
 
-<?php ( function_exists( 'amp_is_request' ) && !amp_is_request() ) { ?>
+<?php if ( function_exists( 'amp_is_request' ) && !amp_is_request() ) { ?>
 <!-- PubGalaxy IAB TCF 2.0 script Top -->
 <script src="https://cmp.uniconsent.com/v2/stub.min.js"></script>
 <script async src='https://cmp.uniconsent.com/v2/de538b0a3a/cmp.js'></script>
@@ -73,7 +73,7 @@ __tcfapi("addEventListener", 2, function(tcData, success) {
 <!-- PubGalaxy IAB TCF 2.0 script top end -->
 <?php } ?> 
 <?php wp_head(); ?>
-<?php ( function_exists( 'amp_is_request' ) && !amp_is_request() ) { ?>
+<?php if ( function_exists( 'amp_is_request' ) && !amp_is_request() ) { ?>
 <!-- PubGalaxy IAB TCF 2.0 script bottom -->
 <script>
 (function waitGEO() {
