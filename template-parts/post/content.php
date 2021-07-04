@@ -88,12 +88,13 @@
 				echo '<div class="two-third-m">';
 					if ( 'post' === get_post_type() ) {
 						echo '<div class="entry-meta">';
-						twentyseventeen_posted_on();
+						echo '<span class="posted-on">' . twentyseventeen_time_link()'</span>'
 						twentyseventeen_edit_link();
 						echo '</div>';
 					}
 					echo '<div class="post-title">';
 					the_title( '<h3 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' );
+					comments_popup_link();
 					echo '</div>';
 				echo '</div>';
 			}
