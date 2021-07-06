@@ -101,7 +101,7 @@ footer#entry-subFooter {border-bottom: 1px solid #eee;}
     .blog .site-main > article, .archive .site-main > article, .search .site-main > article {padding:0!important;}
     body:not(.twentyseventeen-front-page) .entry-header {padding: 0.5em 0 0 0;}
     .entry-header .post-thumbnail {margin-bottom: 0;}
-    .site-title {font-size: 3vh; font-size:20px;}
+    .site-title {font-size: 3vh; font-size:14px;}
     header#masthead div.header-ad {display: inline-block; width: 100%;}
 }
 
@@ -198,6 +198,15 @@ ul ul, ol ol, ul ul ul, ol ol ol {
 
 /* Word link */
 .site-info { display: none; }
+
+/* Remove underline from linked images, set grey shadow box to match background color */
+.entry-content a img,
+.comment-content a img,
+.widget a img {
+        -webkit-box-shadow: 0 0 0 8px #f9f9f8;
+        box-shadow: 0 0 0 8px #f9f9f8;
+}
+
 
 /* Remove underline from social icon */
 a.sidebar-social, a.sidebar-social:hover {
