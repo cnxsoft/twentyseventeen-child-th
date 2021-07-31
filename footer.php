@@ -42,12 +42,19 @@
         </div><!-- .site-content-contain -->
 </div><!-- #page -->
 <?php wp_footer(); ?>
-<div id="amzn-assoc-ad-593731f3-2419-45b0-9d08-5e745f36e047"></div>
-<!-- JLA Sticky amp -->
-<?php 
-    if ( function_exists( 'amp_is_request' ) &&  amp_is_request() ) {
-        echo adrotate_ad(19);
-    }
+<!-- Sticker banner -->
+<?php if (function_exists('adrotate_group')) {
+                if (!wp_is_mobile()) {
+                        echo adrotate_group(16);
+                } else {
+                        if ( function_exists( 'amp_is_request' ) &&  amp_is_request() ) {
+                            echo adrotate_group(18);
+                        } else {
+                            echo adrotate_group(17);
+                        }
+                }
+        }
 ?>
+<div id="amzn-assoc-ad-593731f3-2419-45b0-9d08-5e745f36e047"></div>
 </body>
 </html>
