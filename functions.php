@@ -163,9 +163,12 @@ function wt_cli_defer_scripts( $tag, $handle, $src ) {
 	  'cookie-law-info',
 	);
 	if ( in_array( $handle, $defer ) ) {
-	   return '<script src="' . $src . '" id="'.$handle.'-js" defer="defer" type="text/javascript"></script>' . "\n";
+	   return '<script src="' . $src . '" id="'.$handle.'-js" defer="defer"></script>' . "\n";
 	}
 	return $tag;
 } 
 add_filter( 'script_loader_tag', 'wt_cli_defer_scripts', 10, 3 );
+
+/* Disable AMP JS redirection to use server-side redirection */
+add_filter( 'amp_mobile_client_side_redirection', '__return_false' );
 ?>

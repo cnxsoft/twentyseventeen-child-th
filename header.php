@@ -26,7 +26,7 @@
 <!-- PubGalaxy IAB TCF 2.0 script Top -->
 <script src="https://cmp.uniconsent.com/v2/stub.min.js"></script>
 <script async src='https://cmp.uniconsent.com/v2/de538b0a3a/cmp.js'></script>
-<script type="text/javascript">
+<script>
 window.googletag = window.googletag || {};
 window.googletag.cmd = window.googletag.cmd || [];
 window.googletag.cmd.push(function () {
@@ -104,11 +104,12 @@ __tcfapi("addEventListener", 2, function(tcData, success) {
         <!-- JLA AMP-stick -->
         <script async custom-element="amp-sticky-ad" src="https://cdn.ampproject.org/v0/amp-sticky-ad-1.0.js"></script>
 <?php } ?> 
-
+<?php if ( function_exists( 'amp_is_request' ) && !amp_is_request() ) { ?>
 <!-- Preload wpdiscuz font for Lighthouse performance improvements -->
 <link id='wpdiscuz-preload-0' rel='preload' href='https://th.cnx-software.com/wp-content/plugins/wpdiscuz/assets/third-party/font-awesome-5.13.0/webfonts/fa-brands-400.woff2' as='font' type='font/woff2' crossorigin />
 <link id='wpdiscuz-preload-1' rel='preload' href='https://th.cnx-software.com/wp-content/plugins/wpdiscuz/assets/third-party/font-awesome-5.13.0/webfonts/fa-solid-900.woff2' as='font' type='font/woff2' crossorigin />
 <link id='wpdiscuz-preload-2' rel='preload' href='https://th.cnx-software.com/wp-content/plugins/wpdiscuz/assets/third-party/font-awesome-5.13.0/webfonts/fa-regular-400.woff2' as='font' type='font/woff2' crossorigin />
+<?php } ?> 
 </head>
 
 <body <?php body_class(); ?>>
@@ -116,7 +117,7 @@ __tcfapi("addEventListener", 2, function(tcData, success) {
 <div id="page" class="site">
         <a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'twentyseventeen' ); ?></a>
 
-        <header id="masthead" class="site-header" role="banner">
+        <header id="masthead" class="site-header">
 
                 <?php get_template_part( 'template-parts/header/header', 'image' ); ?>
 
