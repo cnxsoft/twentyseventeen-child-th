@@ -104,6 +104,11 @@ __tcfapi("addEventListener", 2, function(tcData, success) {
         <!-- JLA AMP-stick -->
         <script async custom-element="amp-sticky-ad" src="https://cdn.ampproject.org/v0/amp-sticky-ad-1.0.js"></script>
 <?php } ?> 
+<--! Preload Google Open Sans font for Lighthouse -->
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+<link rel='preload' as='style' href='https://fonts.googleapis.com/css2?family=Open+Sans&display=swap'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Open+Sans&display=swap'>
+
 <?php if ( function_exists( 'amp_is_request' ) && !amp_is_request() ) { ?>
 <!-- Preload wpdiscuz font for Lighthouse performance improvements -->
 <link id='wpdiscuz-preload-0' rel='preload' href='https://th.cnx-software.com/wp-content/plugins/wpdiscuz/assets/third-party/font-awesome-5.13.0/webfonts/fa-brands-400.woff2' as='font' type='font/woff2' crossorigin />
