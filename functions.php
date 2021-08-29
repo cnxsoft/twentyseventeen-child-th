@@ -173,8 +173,38 @@ add_filter( 'script_loader_tag', 'wt_cli_defer_scripts', 10, 3 );
 add_filter( 'amp_mobile_client_side_redirection', '__return_false' );
 
 /* Disable Libre Franklin Google font */
-add_action( 'wp_enqueue_scripts', 'mychild_fonts_url' );
-function mychild_fonts_url() {
-   wp_enqueue_style( 'twentyseventeen-fonts', '', array(), null );
+/* Remove Google Fonts from being imported from Google:
+ * This will remove Franklin Libre and any other Google fonts
+ * imported from the partent theme.
+ * https://codex.wordpress.org/Function_Reference/wp_dequeue_style
+ * */
+
+add_action( 'wp_print_styles', 'remove_google_fonts', 1);
+function remove_google_fonts() {
+   wp_dequeue_style( 'twentyseventeen-fonts' );
+}
+/* A child theme's functions.php runs before the parent.
+ * To remove a filter you have to run it later during init
+ * */
+function remove_google_fonts_preconnect() {
+    remove_filter('wp_resource_hints', 'twentyseventeen_resource_hints');
+}
+add_filter('init', 'remove_google_fonts_preconnect');
+
+
+/* Disable prefetch of Google Fonts API and s.w.org
+ * https://wordpress.org/support/topic/remove-the-new-dns-prefetch-code/
+ * https://developer.wordpress.org/reference/functions/wp_resource_hints/
+ * Remove broken call to Google API
+ * Remove call to WordPress.org for Emoji support
+ * Remove it one step after the fonts '2'
+ * */
+remove_action( 'wp_head', 'wp_resource_hints', 2 );
+
+/* Remove Parent Theme's editor style that imports the Google Fonts API
+ * */
+add_action( 'admin_init', 'my_remove_parent_styles' );
+function my_remove_parent_styles() {
+        remove_editor_styles();
 }
 ?>
