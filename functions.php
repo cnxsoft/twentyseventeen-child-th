@@ -171,4 +171,10 @@ add_filter( 'script_loader_tag', 'wt_cli_defer_scripts', 10, 3 );
 
 /* Disable AMP JS redirection to use server-side redirection */
 add_filter( 'amp_mobile_client_side_redirection', '__return_false' );
+
+/* Disable Libre Franklin Google font */
+add_action( 'wp_enqueue_scripts', 'mychild_fonts_url' );
+function mychild_fonts_url() {
+   wp_enqueue_style( 'twentyseventeen-fonts', '', array(), null );
+}
 ?>
