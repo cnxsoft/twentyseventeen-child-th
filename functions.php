@@ -169,13 +169,19 @@ function wt_cli_defer_scripts( $tag, $handle, $src ) {
 } 
 add_filter( 'script_loader_tag', 'wt_cli_defer_scripts', 10, 3 );
 
+/* Titles of tag pages start with News about */
+add_filter( 'get_the_archive_title', function ($title) {    
+        if ( is_tag() ) {    
+            $title = single_tag_title( 'ข่าว ', false );    
+        }
+        return $title;    
+    });
+
 /* Only show AMP page (Standard) to mobile clients */
 add_filter( 'option_amp-options', function ( $value ) {
-
 	if ( wp_is_mobile() ) {
 		$value['theme_support'] = 'standard';
 	}
-
 	return $value;
 }, 99999 );
 

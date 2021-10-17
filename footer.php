@@ -55,6 +55,5 @@
                 }
         }
 ?>
-<div id="amzn-assoc-ad-593731f3-2419-45b0-9d08-5e745f36e047"></div>
 </body>
 </html>
