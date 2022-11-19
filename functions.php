@@ -223,20 +223,4 @@ add_action( 'admin_init', 'my_remove_parent_styles' );
 function my_remove_parent_styles() {
         remove_editor_styles();
 }
-
-function publish_later_on_feed($where) {
-    global $wpdb;
- 
-    if ( is_feed() ) {
-        $now = gmdate('Y-m-d H:i:s');
- 
-        // value for wait; + device
-        $wait = '5'; // integer
-        $device = 'MINUTE'; //MINUTE, HOUR, DAY, WEEK, MONTH, YEAR
-        $where .= " AND TIMESTAMPDIFF($device, $wpdb->posts.post_date_gmt, '$now') > $wait ";
-    }
-    return $where;
-}
-add_filter('posts_where', 'publish_later_on_feed');
-
 ?>
