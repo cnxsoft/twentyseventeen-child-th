@@ -186,7 +186,7 @@ add_filter( 'option_amp-options', function ( $value ) {
 }, 99999 );
 
 /* Disable AMP JS redirection to use server-side redirection */
-add_filter( 'amp_mobile_client_side_redirection', '__return_false' );
+/* add_filter( 'amp_mobile_client_side_redirection', '__return_false' ); */
 
 /* Disable Libre Franklin Google font */
 /* Remove Google Fonts from being imported from Google:
