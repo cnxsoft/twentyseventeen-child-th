@@ -223,4 +223,31 @@ add_action( 'admin_init', 'my_remove_parent_styles' );
 function my_remove_parent_styles() {
         remove_editor_styles();
 }
+
+/* Preload first image to please PageSpeed */
+function preload_first_image() {
+  if (!is_feed() && is_singular() && has_post_thumbnail()) {
+    global $post;
+
+    $image_id = get_post_thumbnail_id($post->ID);
+    $image_url = wp_get_attachment_image_src($image_id, 'full')[0];
+
+    echo '<link rel="preload" href="' . $image_url . '" as="image">';
+  }
+}
+add_action('wp_head', 'preload_first_image');
+
+/* Convert Gravatar profile photo to WebP for performance */
+function use_webp_public_service($avatar) {
+        $avatar = str_replace(array("www.gravatar.com", "0.gravatar.com", "1.gravatar.com", "2.gravatar.com"), "secure.gravatar.com", $avatar);
+    $avatar = str_replace("https://secure.gravatar.com", "https://gravatar.webp.se", $avatar);
+        return $avatar;
+}
+add_filter('get_avatar', 'use_webp_public_service');
+
+/* Limit the number of sitemap entries for Yoast SEO */
+function max_entries_per_sitemap() {
+    return 100;
+}
+add_filter( 'wpseo_sitemap_entries_per_page', 'max_entries_per_sitemap' );
 ?>
