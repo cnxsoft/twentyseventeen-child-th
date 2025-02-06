@@ -22,94 +22,73 @@
 <meta name="referrer" content="always"/>
 <link rel="profile" href="http://gmpg.org/xfn/11">
 
-<?php if ( function_exists( 'amp_is_request' ) && !amp_is_request() ) : ?>
 <!-- PubGalaxy IAB TCF 2.0 script Top -->
-<script src="https://cmp.uniconsent.com/v2/stub.min.js"></script>
-<script async src='https://cmp.uniconsent.com/v2/de538b0a3a/cmp.js'></script>
 <script>
-window.googletag = window.googletag || {};
-window.googletag.cmd = window.googletag.cmd || [];
-window.googletag.cmd.push(function () {
+  window.googletag = window.googletag || {};
+  window.googletag.cmd = window.googletag.cmd || [];
+  window.googletag.cmd.push(() => {
     window.googletag.pubads().enableAsyncRendering();
     window.googletag.pubads().disableInitialLoad();
-});
-(adsbygoogle = window.adsbygoogle || []).pauseAdRequests = 1;
-</script>
-<script>
-__tcfapi("addEventListener", 2, function(tcData, success) {
-    if (success && tcData.unicLoad  === true) {
-        if(!window._initAds) {
-            window._initAds = true;
-            var script = document.createElement('script');
-            script.async = true;
-            script.src = 'https://dsh7ky7308k4b.cloudfront.net/publishers/cnx-softwarecom_new.min.js';
-            document.head.appendChild(script);
-
-            var script = document.createElement('script');
-            script.async = true;
-            script.src = '//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=593731f3-2419-45b0-9d08-5e745f36e047';
-            document.head.appendChild(script);
-	    
-	    /* Disable Adsense for now to fix CLS issue    
-	    var script = document.createElement('script');
-            script.async = true;
-	    script.setAttribute('data-ad-client','ca-pub-3693704647095934');
-            script.src = '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-            document.head.appendChild(script); */
-
-	    var script = document.createElement('script');
-            script.async = true;
-            script.src = '//btloader.com/tag?h=pubgalaxy-com&upapi=true';
-            document.head.appendChild(script);
-
-            var script = document.createElement('script');
-            script.async = true;
-            script.src = 'https://s.skimresources.com/js/38249X983277.skimlinks.js';
-            document.head.appendChild(script);
+  }
+  );
+  const injectPgScript = (src, isAsync, onLoadCallback) => {
+    if (!src)
+      return;
+    const script = document.createElement("script");
+    script.src = src;
+    if (isAsync)
+      script.async = isAsync;
+    if (onLoadCallback)
+      script.onload = onLoadCallback;
+    document.head.appendChild(script);
+  };
+  
+  const initiatePgAds = () => {
+    !!window.__tcfapi && window.__tcfapi("addEventListener", 2, (tcData, success) => {
+      if (success && (tcData.eventStatus === "useractioncomplete" || tcData.eventStatus === "tcloaded" || tcData.gdprApplies === false)) {
+        if (!window._initAds) {
+          window._initAds = true;
+          injectPgScript("//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", true);
+          injectPgScript("///fms.360yield.com/ow/bundles/live/pubgalaxy/publishers/cnx-softwarecom_new.min.js", true);
+          injectPgScript("//btloader.com/tag?o=5184339635601408&upapi=true", true);
         }
+      }
+    }
+    );
+  };
+  
+  injectPgScript("https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=8095840", true, () => {
+    window.googlefc = window.googlefc || {
+      callbackQueue: []
+    };
+
+    window.googlefc.callbackQueue.push({
+      "CONSENT_API_READY": () => initiatePgAds()
+    });
+    /* Disable... using amz.to links instead 
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = '//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=593731f3-2419-45b0-9d08-5e745f36e047';
+    document.head.appendChild(script); */
+	    
+    /* Enable Adsense for now to fix CLS issue   */
+    if (wp_is_mobile()) {
+      	    var script = document.createElement('script');
+            script.async = true;
+       	    script.setAttribute('data-ad-client','ca-pub-3693704647095934');
+            script.src = '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+            document.head.appendChild(script);
     }
 });
 </script>
 <!-- PubGalaxy IAB TCF 2.0 script top end -->
-<?php endif; ?> 
+
 <?php wp_head(); ?>
-<?php if ( function_exists( 'amp_is_request' ) && !amp_is_request() ) { ?>
-<!-- PubGalaxy IAB TCF 2.0 script bottom -->
-<script>
-(function waitGEO() {
-    var readyGEO;
-    if (window['UnicI'] && window['UnicI'].geo && window['UnicI'].geo !== '-' ) {
-        readyGEO = true;
-        console.log(window['UnicI'].geo);
-        if (window['UnicI'].geo === 'EU') {
-            if(document.getElementById("unic-gdpr")) {
-              document.getElementById("unic-gdpr").style.display = 'block';
-            }
-        }
-        if (window['UnicI'].geo === 'CA') {
-            if(document.getElementById("unic-ccpa")) {
-              document.getElementById("unic-ccpa").style.display = 'block';
-            }
-        }
-    }
-    if (!readyGEO) {
-        setTimeout(waitGEO, 200);
-    }
-})();
-</script>
-<!-- PubGalaxy IAB TCF 2.0 script bottom End -->
-<?php } else { ?>
-         <!-- JLA amp-ad -->
-        <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
-        <!-- JLA AMP-stick -->
-        <script async custom-element="amp-sticky-ad" src="https://cdn.ampproject.org/v0/amp-sticky-ad-1.0.js"></script>
-<?php } ?> 
-<?php if ( function_exists( 'amp_is_request' ) && !amp_is_request() ) { ?>
+
 <!-- Preload wpdiscuz font for Lighthouse performance improvements -->
 <link id='wpdiscuz-preload-0' rel='preload' href='https://th.cnx-software.com/wp-content/plugins/wpdiscuz/assets/third-party/font-awesome-5.13.0/webfonts/fa-brands-400.woff2' as='font' type='font/woff2' crossorigin />
 <link id='wpdiscuz-preload-1' rel='preload' href='https://th.cnx-software.com/wp-content/plugins/wpdiscuz/assets/third-party/font-awesome-5.13.0/webfonts/fa-solid-900.woff2' as='font' type='font/woff2' crossorigin />
 <link id='wpdiscuz-preload-2' rel='preload' href='https://th.cnx-software.com/wp-content/plugins/wpdiscuz/assets/third-party/font-awesome-5.13.0/webfonts/fa-regular-400.woff2' as='font' type='font/woff2' crossorigin />
-<?php } ?> 
 </head>
 
 <body <?php body_class(); ?>>
@@ -144,7 +123,6 @@ __tcfapi("addEventListener", 2, function(tcData, success) {
                 echo '</div><!-- .single-featured-image-header -->';
         endif;*/
         ?>
-
         <div class="site-content-contain">
                 <div id="content" class="site-content">
 
