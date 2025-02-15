@@ -72,13 +72,11 @@
     document.head.appendChild(script); */
 	    
     /* Enable Adsense for now to fix CLS issue   */
-    if (wp_is_mobile()) {
-      	    var script = document.createElement('script');
-            script.async = true;
-       	    script.setAttribute('data-ad-client','ca-pub-3693704647095934');
-            script.src = '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+    var script = document.createElement('script');
+    script.async = true;
+    script.setAttribute('data-ad-client','ca-pub-3693704647095934');
+    script.src = '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
             document.head.appendChild(script);
-    }
 });
 </script>
 <!-- PubGalaxy IAB TCF 2.0 script top end -->
